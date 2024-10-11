@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Відгадай число</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e0f7fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background-color: #b2ebf2;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .back-button {
+            margin: 5px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #0097a7;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #126d78;
+        }
+        h1 {
+            margin: 5px;
+            font-size: 2.5rem;
+            color: #1e90ff;
+        }
+        .button {
+            margin: 5px;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #0097a7;
+            color: white;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #126d78;
+        }
+        .display {
+            width: 100%;
+            height: 40px;
+            text-align: right;
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 24px;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-button">На головну</a>
+
+    <div class="container">
+        <h1>Гра: Відгадай число</h1>
+
+        <p style="color: #1e90ff;">{{ message }}</p>
+
+        <form method="get" action="{% url 'guess_number' %}">
+            <label for="guess" style="color: #1e90ff;">Введіть ваше число:</label>
+            <input type="text" name="guess" id="guess" class="display">
+            <button type="submit" class="button">Відправити</button>
+        </form>
+
+        <p class="attempts" style="color: #1e90ff;">Кількість спроб: {{ attempts }}</p>
+    </div>
+</body>
+</html>
