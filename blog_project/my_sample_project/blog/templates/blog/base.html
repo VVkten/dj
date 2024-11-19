@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title>Блог</title>
+    <style>
+    nav {
+        background-color: #007bff;
+        padding: 10px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    nav ul li {
+        display: inline;
+    }
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-weight: bold;
+        font-size: 18px;
+        display: block;
+    }
+
+    nav ul li a:hover {
+        background: radial-gradient(circle, #0056b3,#007bff );
+        transition: background-color 0.3s ease;
+    }
+
+    .jjj {
+        margin-top: 70px;
+    }
+
+    {% block head %}{% endblock %}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'blog:drafts' %}">Мої чорновики</a></li>
+                <li><a href="{% url 'blog:my_posts' %}">Мої пости</a></li>
+                <li><a href="{% url 'blog:posts' %}">Пости</a></li>
+                <li><a href="{% url 'blog:create_post' %}">Створити пост</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="jjj">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

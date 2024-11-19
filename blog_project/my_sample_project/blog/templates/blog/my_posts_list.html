@@ -1,0 +1,128 @@
+{% extends "blog/base.html" %}
+
+{% block head %}
+    <style>
+        body {
+           font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            padding-top: 20px;
+        }
+
+        /* Заголовок */
+        h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        /* Кнопка "Create post" справа від заголовка */
+        .btn-create-post {
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007bff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            float: right;
+            margin-top: -5px; /* для вирівнювання з заголовком */
+        }
+
+        .btn-create-post:hover {
+            color: #fff;
+            background-color: #0056b3;
+        }
+
+        ul.post-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 40px;
+        }
+
+        ul.post-list li {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul.post-list a.post-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        ul.post-list a.post-link:hover {
+            color: #007bff;
+        }
+
+        ul.post-list a.update-link,
+        ul.post-list a.delete-link {
+            margin-left: 8px;
+            color: #e74c3c;
+            font-size: 0.9em;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: color 0.3s;
+        }
+
+        ul.post-list a.update-link:hover,
+        ul.post-list a.delete-link:hover {
+            color: darkred;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .pagination a:hover {
+            text-decoration: underline;
+        }
+
+        .pagination .current {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+     <div class="container">
+
+         <h1>Мої пости</h1>
+            <ul>
+                {% for post in object_list %}
+                    <li>
+                        <a href="{% url 'blog:post' post.year post.month post.day post.slug %}">{{ post.title }}</a>
+                    </li>
+                {% empty %}
+                    <li>Немає постів.</li>
+                {% endfor %}
+            </ul>
+
+     </div>
+{% endblock %}

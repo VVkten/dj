@@ -1,0 +1,177 @@
+{% extends "blog/base.html" %}
+
+{% block head %}
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;  /* Замість block */
+            justify-content: center;  /* Центрування по горизонталі */
+            align-items: center;  /* Центрування по вертикалі */
+            min-height: 100vh;  /* Висота екрану */
+        }
+
+
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 900px;
+            margin: 20px;
+            box-sizing: border-box;  /* Додаємо box-sizing, щоб враховувати padding */
+        }
+
+        /* Заголовок */
+        h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Кнопка "Create post" справа від заголовка */
+        .btn-create-post {
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007bff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            float: right;
+            margin-top: -5px; /* для вирівнювання з заголовком */
+        }
+
+        .btn-create-post:hover {
+            color: #fff;
+            background-color: #0056b3;
+        }
+
+        ul.post-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 40px;
+        }
+
+        ul.post-list li {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul.post-list a.post-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        ul.post-list a.post-link:hover {
+            color: #007bff;
+        }
+
+        ul.post-list a.update-link,
+        ul.post-list a.delete-link {
+            margin-left: 8px;
+            color: #e74c3c;
+            font-size: 0.9em;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: color 0.3s;
+        }
+
+        ul.post-list a.update-link:hover,
+        ul.post-list a.delete-link:hover {
+            color: darkred;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .pagination a:hover {
+            text-decoration: underline;
+        }
+
+        .pagination .current {
+            font-weight: bold;
+        }
+
+
+
+        .sort-buttons {
+            margin-bottom: 20px;
+        }
+
+        .btn-sort {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .btn-sort:hover {
+            background-color: #0056b3;
+        }
+
+
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>All posts:</h2>
+
+        <!-- Фільтрація за датою -->
+<!--        <div class="sort-buttons">-->
+<!--            <a href="?sort_order=desc" class="btn-sort">Newest First</a>-->
+<!--            <a href="?sort_order=asc" class="btn-sort">Oldest First</a>-->
+<!--        </div>-->
+
+        <!-- Список постів -->
+        <ul class="post-list">
+            {% for post in page_obj %}
+                <li>
+                    <a href="{% url 'blog:post' post.created_at.year post.created_at.month post.created_at.day post.slug %}" class="post-link">{{ post.title }}</a>
+                    {% if post.author == user %}
+                        <a href="{% url 'blog:update_post' post.id %}" class="update-link">update</a>
+                        <a href="{% url 'blog:delete_post' post.id %}" class="delete-link">delete</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Пагінація -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&sort_order={{ sort_order }}">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&sort_order={{ sort_order }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&sort_order={{ sort_order }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&sort_order={{ sort_order }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+{% endblock %}
+
