@@ -6,6 +6,7 @@ from .models import Post, Comment
 class PostAdmin(admin.ModelAdmin):
     list_display = ["title", "author", "status", "published_at"]
     list_filter = ["author", "status"]
+    search_fields = ['title', 'content']
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

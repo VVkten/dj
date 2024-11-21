@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
     'hello_app',
     'home_app',
     'blog',
+    'taggit',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -136,3 +138,10 @@ LOGOUT_REDIRECT_URL = 'home_app:home'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_FAIL_SILENTLY = not DEBUG
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Для TLS
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'niksihelmer@gmail.com'  # Ваш email
+EMAIL_HOST_PASSWORD = 'kpqa rerj bxqk ktor'  # Ваш пароль або App Password (якщо використовуєте двофакторну автентифікацію)

@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from taggit.managers import TaggableManager
 
 class PublishedPostsManager(models.Manager):
     def get_queryset(self):
@@ -31,6 +32,8 @@ class Post(models.Model):
     published_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
+
+    tags = TaggableManager()
 
     objects = models.Manager()
     published_objects = PublishedPostsManager()

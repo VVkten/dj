@@ -14,6 +14,7 @@ urlpatterns = [
     path('update_post/<int:pk>', views.PostUpdateView.as_view(), name='update_post'),
     path('create_post/', views.PostCreateView.as_view(), name='create_post'),
     # path('post/<int:year>/<int:month>/<int:day>/<slug:slug>/comment/', views.add_comment, name='add_comment'),
-    path('post_comment/<int:post_id>', views.post_comment, name="post_comment")
-
+    path('post_comment/<int:post_id>', views.post_comment, name="post_comment"),
+    path('tag/<str:tag>/', views.posts_by_tag, name='posts_by_tag'),
+    path('share_by_email/<int:post_id>', views.share_by_email, name="share_by_email")
 ]

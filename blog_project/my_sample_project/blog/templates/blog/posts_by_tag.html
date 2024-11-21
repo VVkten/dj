@@ -1,0 +1,115 @@
+{% extends "blog/base.html" %}
+
+{% block head %}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 900px;
+            margin: 20px;
+        }
+
+        .container h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container i {
+            color: #666;
+            font-style: italic;
+        }
+
+        .container p {
+            color: #333;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .container a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .container a:hover {
+            color: #0056b3;
+        }
+
+         /* Заголовок */
+        h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Кнопка "Create post" справа від заголовка */
+        .btn-create-post {
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007bff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            float: right;
+            margin-top: -5px; /* для вирівнювання з заголовком */
+        }
+
+        .btn-create-post:hover {
+            color: #fff;
+            background-color: #0056b3;
+        }
+
+        ul.post-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 40px;
+        }
+
+        ul.post-list li {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul.post-list a.post-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+{% endblock %}
+
+{% block content %}
+     <div class="container">
+        <h1>Posts with tag: "{{ tag }}"</h1>
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <a href="{% url 'blog:post' post.created_at.year post.created_at.month post.created_at.day post.slug %}" class="post-link">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if not posts %}
+            <p>No posts found with this tag.</p>
+        {% endif %}
+    </div>
+{% endblock %}

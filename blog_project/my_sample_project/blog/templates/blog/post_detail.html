@@ -112,12 +112,41 @@
             border-color: #007bff;
             outline: none;
         }
+
+
+        .tags ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tags li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .tags a {
+            text-decoration: none;
+            color: blue;
+        }
+
+        .tags a.active {
+            font-weight: bold;
+            color: red;
+        }
+
 {% endblock %}
 
 {% block content %}
      <div class="container">
-        <a href="javascript:history.back()">Exit</a>
-        <h1>{{ post.title }}</h1>
+         <a href="javascript:history.back()">Exit</a>
+         <h1>{{ post.title }}</h1>
+         <a href="{% url 'blog:share_by_email' post.id %}">Share post</a>
+
+         <p>Tags:
+            {% for tag in object.tags.all %}
+              <a href="{% url 'blog:posts_by_tag' tag=tag %}">{{ tag }}</a>
+            {% endfor %}
+        </p>
         <i>Owner {{ post.author }}</i>
 
         <p>

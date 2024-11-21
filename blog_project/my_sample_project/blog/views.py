@@ -5,36 +5,42 @@ from .models import Post
 from django.urls import reverse_lazy
 from .forms import *
 from django.views.decorators.http import require_POST
-
+from taggit.models import Tag
 from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.core.mail import send_mail
 
 
-# def post_list(request):
-#     # Отримуємо параметр сортування (за замовчуванням від найновіших до старіших)
-#     sort_order = request.GET.get('sort_order', 'desc')  # 'desc' для від найновіших до старіших, 'asc' - навпаки
-#
-#     # Запит для постів
-#     posts = Post.objects.all()
-#
-#     # Якщо потрібно, сортуємо за датою публікації
-#     if sort_order == 'asc':
-#         posts = posts.order_by('published_at')  # Від старих до нових
-#     else:
-#         posts = posts.order_by('-published_at')  # Від нових до старих
-#
-#     # Пагінація
-#     paginator = Paginator(posts, 10)  # 10 постів на сторінку
-#     page_number = request.GET.get('page')
-#     page_obj = paginator.get_page(page_number)
-#
-#     return render(request, 'blog/post_list.html', {
-#         'page_obj': page_obj,
-#         'sort_order': sort_order,  # Передаємо параметр сортування до шаблону
-#     })
+def share_by_email(request, post_id):
+    form = None
+    if request.method == "POST":
+        form = EmailForm(request.POST)
+        if (form.is_valid()):
+            email_to = form.cleaned_data["email_to"]
+            subject = form.cleaned_data["subject"]
+            text = form.cleaned_data["text"]
+
+            send_mail(
+                subject,
+                text,
+                from_email=None,
+                recipient_list=[email_to],
+                fail_silently=False,
+            )
+    else:
+        form = EmailForm()
+
+    ctx = {"form": form}
+
+    return render(request, "blog/share_post.html", ctx)
+
+def posts_by_tag(request, tag):
+    posts = Post.objects.filter(tags__name=tag)
+    return render(request, 'blog/posts_by_tag.html', {'posts': posts, 'tag': tag})
 
 
 @require_POST
@@ -61,9 +67,26 @@ def post_comment(request, post_id):
 class PostView(ListView):
     model = Post
     paginate_by = 5
+    template_name = "blog/post_list.html"
 
     def get_queryset(self):
-        return Post.published_objects.all()
+        queryset = Post.published_objects.all()
+        query = self.request.GET.get('q')  # Отримуємо параметр для пошуку
+
+        if query:
+            if "#" in query:  # Якщо в запиті є '#', шукаємо за тегами
+                tag = query.lstrip('#')  # Видаляємо '#' для пошуку по тегах
+                queryset = queryset.filter(tags__name__icontains=tag)
+            else:  # Якщо '#' немає, шукаємо за назвою постів
+                queryset = queryset.filter(title__icontains=query)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')  # Передаємо введений текст для пошуку
+        return context
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -124,7 +147,7 @@ class DraftPostsListView(ListView):
 
 class PostUpdateView(UpdateView):
     model = Post
-    fields = ["title", "content", "status"]
+    fields = ["title", "content", "status", "tags"]
     success_url = reverse_lazy('blog:posts')
 
     def get_queryset(self, **kwargs):
@@ -135,7 +158,7 @@ class PostUpdateView(UpdateView):
 
 class PostCreateView(CreateView):
     model = Post
-    fields = ["title", "content", "status"]
+    fields = ["title", "content", "status", "tags"]
     success_url = reverse_lazy('blog:posts')
 
     def form_valid(self, form):
