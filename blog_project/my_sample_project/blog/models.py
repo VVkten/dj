@@ -5,6 +5,8 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
+from django.contrib.auth.models import AbstractUser
+
 
 class PublishedPostsManager(models.Manager):
     def get_queryset(self):

@@ -5,13 +5,9 @@ from .models import Post
 from django.urls import reverse_lazy
 from .forms import *
 from django.views.decorators.http import require_POST
-from taggit.models import Tag
-from django.utils.text import slugify
-from django.core.paginator import Paginator
+from django.contrib import messages
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from django.core.mail import send_mail
 
 
@@ -135,16 +131,6 @@ class DraftPostsListView(ListView):
         )
 
 
-# class PostDeleteView(DeleteView):
-#     model = Post
-#     success_url = reverse_lazy("blog:posts")
-#
-#     def get_queryset(self, **kwargs):
-#         queryset = super().get_queryset(**kwargs)
-#         queryset = queryset.filter(author=self.request.user)
-#         return queryset
-
-
 class PostUpdateView(UpdateView):
     model = Post
     fields = ["title", "content", "status", "tags"]
@@ -163,4 +149,5 @@ class PostCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        messages.success(self.request, "Пост успішно створено!")  # Додаємо повідомлення
         return super().form_valid(form)

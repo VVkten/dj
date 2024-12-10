@@ -11,6 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
+from decouple import config
+
+
+MESSAGE_TAGS = {
+    messages.INFO: "",
+    50: "critical",
+}
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +34,7 @@ SECRET_KEY = 'django-insecure-42kb)k9x$s0j0d!i%a-izs8fhczcf()nj)bbv+d&tds$e(kf$p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -36,6 +44,7 @@ INSTALLED_APPS = [
     'home_app',
     'blog',
     'taggit',
+    'social_django',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -45,7 +54,9 @@ INSTALLED_APPS = [
      # Extensions - installed with requirements.txt
     'django_extensions', 
     'crispy_forms',  
-    'crispy_bootstrap5',  
+    'crispy_bootstrap5',
+    'images.apps.ImagesConfig',
+    'bookmarks', 'account',
 ]
 
 MIDDLEWARE = [
@@ -143,5 +154,26 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # Для TLS
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'niksihelmer@gmail.com'  # Ваш email
-EMAIL_HOST_PASSWORD = 'kpqa rerj bxqk ktor'  # Ваш пароль або App Password (якщо використовуєте двофакторну автентифікацію)
+EMAIL_HOST_USER = 'niksihelmer@gmail.com'
+EMAIL_HOST_PASSWORD = 'kpqa rerj bxqk ktor'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_OAUTH2_SECRET')
+
+SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT =  BASE_DIR / 'media'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'home_app.authentication.EmailAuthBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2'
+]
+
+from decouple import config
+# ...
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_OAUTH2_SECRET')

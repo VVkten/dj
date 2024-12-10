@@ -11,6 +11,8 @@
         left: 0;
         right: 0;
         z-index: 1000;
+        list-style: none;
+        padding: 0;
     }
 
     nav ul {
@@ -43,6 +45,12 @@
         margin-top: 70px;
     }
 
+    .success {
+        color: green;
+        font-weight: bold;
+    }
+
+
     {% block head %}{% endblock %}
     </style>
 </head>
@@ -56,9 +64,15 @@
                 <li><a href="{% url 'blog:create_post' %}">Створити пост</a></li>
             </ul>
         </nav>
+
     </header>
 
     <div class="jjj">
+        {% if messages %}
+                {% for message in messages %}
+                <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
         {% block content %}
         {% endblock %}
     </div>
