@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 from decouple import config
@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'quizlet',
     'hello_app',
     'home_app',
     'blog',
@@ -51,12 +52,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     # Extensions - installed with requirements.txt
-    'django_extensions', 
+    'django_extensions',
     'crispy_forms',  
     'crispy_bootstrap5',
-    'images.apps.ImagesConfig',
-    'bookmarks', 'account',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+{% block content %}
+<div class="greeting-container">
+    <div class="greeting-text">
+        <h1>Discover the Beauty of Ukrainian!</h1>
+        <p>Our website is here to make learning Ukrainian fun, easy, and accessible for everyone. We believe that mastering a language connects people and opens doors to rich cultural experiences and meaningful communication.</p>
+    </div>
+    <div class="greeting-image">
+        <img src="{% static 'quizlet/image/hey.png' %}" alt="Greeting Image">
+    </div>
+</div>
+
+<div class="greeting-container-left">
+    <div class="greeting-image">
+        <img src="{% static 'quizlet/image/hey2.png' %}" alt="Greeting Image">
+    </div>
+    <div class="greeting-text">
+        <h1>Your Companion in Learning Ukrainian</h1>
+        <p>Step by step, we help you learn Ukrainian — from essential words to complex expressions. With interactive exercises, flashcards, and real-life examples, mastering the language has never been this engaging.</p>
+    </div>
+</div>
+
+<div class="greeting-container">
+    <div class="greeting-text">
+        <h1>Personalized Learning, Just for You</h1>
+        <p>Learn at your own pace, wherever and whenever it suits you. Our app adapts to your skill level and interests to provide a unique and personalized learning experience.</p>
+    </div>
+    <div class="greeting-image">
+        <img src="{% static 'quizlet/image/hey3.png' %}" alt="Greeting Image">
+    </div>
+</div>
+
+<div class="greeting-container-left">
+    <div class="greeting-image">
+        <img src="{% static 'quizlet/image/hey4.png' %}" alt="Greeting Image">
+    </div>
+    <div class="greeting-text">
+        <h1>Fall in Love with Ukrainian Culture</h1>
+        <p>Ukrainian is more than just a language — it’s a gateway to a rich heritage of music, literature, traditions, and history. We aim to inspire you not only to learn but to experience the beauty of this language.</p>
+    </div>
+</div>
+
+<div class="banner">
+    <h1>Your First Step to Mastering Ukrainian</h1>
+    <p>We understand how challenging it can be to start learning a new language. That’s why we’ve designed a friendly, easy-to-use app to guide you on your journey and help you achieve your goals.</p>
+</div>
+
+
+{% endblock %}

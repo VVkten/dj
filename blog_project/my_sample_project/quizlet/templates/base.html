@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'quizlet/css/style_home.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'quizlet:home_page' %}">Home</a></li>
+                <li><a href="{% url 'quizlet:about' %}">About us</a></li>
+                <li><a href="{% url 'quizlet:cards' %}">Cards</a></li>
+            </ul>
+            <div class="account-icon">
+                <a href="{% url 'quizlet:account' %}"><img src="{% static 'quizlet/image/user.png' %}" alt="Акаунт"></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

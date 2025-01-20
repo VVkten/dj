@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+
+<div class="greeting-container">
+    <div class="greeting-text">
+        <h1>Welcome to our website!</h1>
+        <p>We are happy to welcome you to our community. Here you will find a lot of interesting and useful content. Enjoy!</p>
+    </div>
+    <div class="greeting-image">
+        <img src="{% static 'quizlet/image/hey.png' %}" alt="Greeting Image">
+    </div>
+</div>
+
+ <section class="desks">
+     {% for deck in decks %}
+            <div class="desk">
+                <div class="desk-inner">
+                    <div class="desk-front">
+                        <h2>{{ deck.name }}</h2>
+                        <p>{{ deck.description }}</p>
+                        <p>Rating: {{ deck.rating }}</p>
+                        <a href="{% url 'quizlet:deck_detail' deck.id %}">View cards</a>
+                    </div>
+                    <div class="desk-back">
+                        <p>Creation date: {{ deck.created_at }}</p>
+                        <p>Author: {{ deck.author.username }}</p>
+                    </div>
+                </div>
+            </div>
+     {% endfor %}
+ </section>
+
+<script>document.addEventListener("DOMContentLoaded", () => {
+    const desks = document.querySelectorAll(".desk");
+
+    desks.forEach(desk => {
+        desk.addEventListener("click", () => {
+            desk.classList.toggle("flipped"); // Додає/знімає клас .flipped
+        });
+    });
+});
+</script>
+
+<!--        <section class="cards">-->
+<!--            <div class="card">-->
+<!--                <div class="card-inner">-->
+<!--                    <div class="card-front">-->
+<!--                        <h2>Apple</h2>-->
+<!--                    </div>-->
+<!--                    <div class="card-back">-->
+<!--                        <h2>Яблуко</h2>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+
+
+
+{% endblock %}

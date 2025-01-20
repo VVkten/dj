@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Account{% endblock %}
+{% block content %}
+ <section class="account-section">
+            <div class="account-info">
+                <h1>Your account</h1>
+                <div class="account-details">
+                    <div class="account-item">
+                        <label for="username">Username:</label>
+                        <div class="info-field" id="username">{{ user.username }}</div>
+                    </div>
+                    <div class="account-item">
+                        <label for="username">Full name:</label>
+                        <div class="info-field" id="fullname">{{ user.get_full_name }}</div>
+                    </div>
+                    <div class="account-item">
+                        <label for="email">Email:</label>
+                        <div class="info-field" id="email">{{ user.email }}</div> <!-- Емейл -->
+                    </div>
+                </div>
+<!--                <form action="#" method="post">-->
+<!--                    <label for="username">Логін:</label>-->
+<!--                    <input type="text" id="username" name="username" placeholder="Введіть ваш логін" required>-->
+
+<!--                    <label for="email">Емейл:</label>-->
+<!--                    <input type="email" id="email" name="email" placeholder="Введіть ваш емейл" required>-->
+
+<!--                    <button type="submit">Оновити</button>-->
+<!--                </form>-->
+            </div>
+
+            <div class="card-set">
+                <h2>Your desks</h2>
+                <section class="desks">
+                 {% for deck in decks %}
+                        <div class="desk">
+                            <div class="desk-inner">
+                                <div class="desk-front">
+                                    <h2>{{ deck.name }}</h2>
+                                    <p>{{ deck.description }}</p>
+                                    <p>Rating: {{ deck.rating }}</p>
+                                    <a href="{% url 'quizlet:deck_detail' deck.id %}">View cards</a>
+                                </div>
+                                <div class="desk-back">
+                                    <p>Creation date: {{ deck.created_at }}</p>
+                                    <p>Author: {{ deck.author.username }}</p>
+                                </div>
+                            </div>
+                        </div>
+                 {% endfor %}
+             </section>
+            </div>
+ </section>
+<script>document.addEventListener("DOMContentLoaded", () => {
+    const desks = document.querySelectorAll(".desk");
+
+    desks.forEach(desk => {
+        desk.addEventListener("click", () => {
+            desk.classList.toggle("flipped"); // Додає/знімає клас .flipped
+        });
+    });
+});
+</script>
+{% endblock %}

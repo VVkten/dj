@@ -15,7 +15,7 @@
     {% endif%}
 </p>
 
-<form action="{% url "logout" %}" method="post">
+<form action="{% url 'logout' %}" method="post">
     <label>You are logged in. You can Logout:</label>
     <button type="submit">Logout</button>
     {% csrf_token %}
@@ -45,6 +45,7 @@
     </li>
     <li>
         Go to <a href="{% url 'blog:posts' %}">{% url 'blog:posts' %}</a>
+        Go to <a href="{% url 'quizlet:home_page' %}">{% url 'quizlet:home_page' %}</a>
     </li>
 </ul>
 

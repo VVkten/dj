@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Deck details{% endblock %}
+{% block content %}
+
+<div class="deck-info-det">
+    <h1>{{ deck.name }}</h1>
+    <p>{{ deck.description }}</p>
+    <p>Author: {{ deck.author.username }}</p>
+    <p>Rating: {{ deck.rating }}</p>
+    <p>Creation date: {{ deck.created_at }}</p>
+    <h2>Cards:</h2>
+</div>
+
+<div class="cards">
+  {% for card in deck.cards.all %}
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front">
+                <h2>{{ card.term }}</h2>
+            </div>
+            <div class="card-back">
+                <h2>{{ card.definition }}</h2>
+            </div>
+        </div>
+    </div>
+  {% endfor %}
+</div>
+
+<a href="{% url 'quizlet:home_page' %}" class="backbtn">Back</a>
+
+{% endblock %}

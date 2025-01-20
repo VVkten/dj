@@ -21,8 +21,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("bookmarks.urls")),
+    # path('', include("bookmarks.urls")),
     path('', include("home_app.urls")),
+    path('blog/', include('blog.urls')),
+    path('quizlet/', include('quizlet.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('social-auth/', include('social_django.urls', namespace='social'))
 ]
